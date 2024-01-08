@@ -35,9 +35,5 @@ function actualizarUsuario($id, $nombre, $apellidos, $email, $dni) {
     $stmt->execute([$nombre, $apellidos, $email, $dni, $id]);
 }
 
-function eliminarUsuario($id) {
-    global $pdo;
-    $stmt = $pdo->prepare('DELETE FROM usuarios WHERE id = ?');
-    $stmt->execute([$id]);
-}
+
 ?>
