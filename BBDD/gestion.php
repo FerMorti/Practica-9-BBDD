@@ -34,6 +34,4 @@ function actualizarUsuario($id, $nombre, $apellidos, $email, $dni) {
     $stmt = $pdo->prepare('UPDATE usuarios SET nombre = ?, apellidos = ?, email = ?, dni = ? WHERE id = ?');
     $stmt->execute([$nombre, $apellidos, $email, $dni, $id]);
 }
-
-
 ?>

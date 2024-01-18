@@ -1,3 +1,24 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['nombre_usuario'])) {
+    header("Location: gestionLogin.php");
+    exit();
+}
+
+include('gestion.php');
+
+if (isset($_POST['agregar_usuario'])) {
+    $nombre = $_POST['nombre'];
+    $apellidos = $_POST['apellidos'];
+    $email = $_POST['email'];
+    $dni = $_POST['dni'];
+
+    agregarUsuario($nombre, $apellidos, $email, $dni);
+}
+
+$usuarios = obtenerUsuarios();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,7 +46,6 @@
     </script>
 </head>
 <body>
-    
     <center>
     <form method="post">
         <label for="nombre">Nombre:</label>
@@ -38,6 +58,7 @@
         <input type="text" name="dni" required>
         <button type="submit" name="agregar_usuario">Agregar Usuario</button>
     </form>
+    <a href="Logout.php">Salir de la sesión</a>
     </center>
 
     <center><table border="1">
@@ -48,19 +69,7 @@
             <th>DNI</th>
             <th>Acciones</th>
         </tr>
-        <?php 
-        include('gestion.php');
-        if (isset($_POST['agregar_usuario'])) {
-            $nombre = $_POST['nombre'];
-            $apellidos = $_POST['apellidos'];
-            $email = $_POST['email'];
-            $dni = $_POST['dni'];
-
-            agregarUsuario($nombre, $apellidos, $email, $dni);
-        }
-
-        $usuarios = obtenerUsuarios();
-        foreach ($usuarios as $usuario) : ?>
+        <?php foreach ($usuarios as $usuario) : ?>
             <tr id="fila-<?php echo $usuario['id']; ?>">
                 <td><?php echo $usuario['nombre']; ?></td>
                 <td><?php echo $usuario['apellidos']; ?></td>
@@ -73,8 +82,5 @@
             </tr>
         <?php endforeach; ?>
     </table></center>
-
-
-    
 </body>
 </html>
